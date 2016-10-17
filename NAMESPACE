@@ -1,0 +1,91 @@
+useDynLib("EBImage", .registration = TRUE, .fixes = "C_")
+
+importFrom("BiocGenerics", "combine", "normalize")
+importFrom("methods", "as", "callGeneric", "callNextMethod", "is", "new", "Ops", "show", "validObject")
+importFrom("graphics", "abline", "clip", "hist", "hist.default", "image", "image.default", "matplot", "par", "plot", "rasterImage")
+importFrom("grDevices", "as.raster", "col2rgb", "gray", "heat.colors", "rgb")
+importFrom("stats", "dnorm", "mad", "median", "predict", "quantile", "sd")
+importFrom("abind", "abind", "adrop", "asub")
+importFrom("locfit", "locfit", "lp")
+importFrom("tiff", "readTIFF", "writeTIFF")
+importFrom("jpeg", "readJPEG", "writeJPEG")
+importFrom("png", "readPNG", "writePNG")
+importFrom("fftwtools", "fftw2d")
+importFrom("utils", "browseURL")
+
+## classes
+exportClasses(Image)
+
+## image class, accessors
+export(Image, is.Image, as.Image)
+export(Grayscale, Color)
+exportMethods(Ops, "[")
+export(colorMode, "colorMode<-", imageData, "imageData<-")
+export(getFrame, getFrames, numberOfFrames)
+S3method(as.array, Image)
+S3method(as.raster, Image)
+S3method(print, Image)
+S3method(as.Image, Image)
+S3method(as.Image, default)
+
+## image IO, display
+exportMethods(show, image)
+export(readImage, writeImage)
+export(display)
+
+## spatial transform
+export(resize, rotate)
+export(flip, flop)
+export(translate)
+export(affine)
+export(transpose)
+
+## image segmentation, objects manipulation
+export(thresh, bwlabel, otsu)
+export(watershed, propagate)
+export(ocontour)
+export(paintObjects, rmObjects, reenumerate, colorLabels)
+
+## statistics
+S3method(median, Image)
+S3method(quantile, Image)
+exportMethods(hist)
+
+## image enhancement, filtering
+export(filter2)
+export(gblur)
+export(medianFilter)
+export(equalize)
+
+## morphological operations
+export(makeBrush)
+export(erode, dilate, opening, closing, whiteTopHat, blackTopHat, selfComplementaryTopHat)
+export(distmap)
+export(floodFill, fillHull)
+
+## colorspace
+export(rgbImage, channel, toRGB, colormap)
+
+## image stacking, tiling
+export(stackObjects)
+export(tile, untile)
+
+## drawables
+export(drawCircle)
+
+## features extraction
+export(computeFeatures)
+export(computeFeatures.basic, computeFeatures.haralick, computeFeatures.moment, computeFeatures.shape)
+export(standardExpandRef, gblob)
+export(localCurvature)
+
+## methods extending S4 generics from the BiocGenerics package
+exportMethods(normalize, combine)
+
+## legacy code because of broken R 3.1.2
+importFrom("methods", "Math2")
+exportMethods(Math2)
+exportMethods(log)
+
+## defunct
+export(erodeGreyScale, dilateGreyScale, openingGreyScale, closingGreyScale, whiteTopHatGreyScale, blackTopHatGreyScale, selfcomplementaryTopHatGreyScale)
